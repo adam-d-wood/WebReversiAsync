@@ -1,0 +1,148 @@
+.container-fluid {
+    padding: 2rem;
+}
+
+p {
+    color: white;
+}
+
+body {
+    background-color: rgb(41, 41, 41);
+    /* background: white; */
+}
+
+#humanCoords {
+    color: white;
+}
+
+.slidecontainer {
+    width: 100%; /* Width of the outside container */
+  }  
+
+.slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 25px;
+    background: green;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: 0.2s;
+    transition: opacity .2s; 
+}
+
+.col-md-3 {
+    border: solid red 2px;
+}
+
+.slider:hover {
+    opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: 25px; /* Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    background: #4CAF50; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+  }
+  
+  .slider::-moz-range-thumb {
+    width: 25px; /* Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    background: #4CAF50; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+  }  
+
+canvas {
+    background: rgba(11, 95, 8, 1);
+    /* border: solid 1px black; */
+    /* align-self: center; */
+    margin: auto;
+    padding: 0;
+    display: block;
+    border-radius: 5px;
+}
+
+#moveHistory {
+    width: 100%;
+    /* color: #ffffff; */
+    font-size: 1rem;
+    font-family: "Lucida Console";
+}
+
+/* #moveHistory tr:nth-child(even) {
+    background-color: #50514F;
+}
+
+#moveHistory tr:nth-child(odd) {
+    background-color: #50514F;
+} */
+
+#moveHistory tr {
+    /* background-color: rgba(0, 0, 0, 0.1); */
+    border-bottom: solid #A2A3BB 1px;
+    height: 50px;
+}
+
+#moveHistory td:nth-child(even), th:nth-child(even)  {
+    color: #B33D00;
+    text-align: center;
+}
+
+#moveHistory td:nth-child(odd), th:nth-child(odd) {
+    color: #00B3AA;
+    text-align: center;
+
+}
+
+#tableWrapper {
+    max-width: 300px;
+    height: 500px;
+    overflow: scroll;
+    /* border: solid black 4px; */
+    background-color: #50514F;
+    background: rgba(11, 95, 8, 1);
+    display: block;
+    margin: auto;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+th {
+    text-align: left;
+}
+
+.navbar {
+    display: none;
+}
+
+#configPanel {
+    background: rgba(11, 95, 8, 1);
+    border-radius: 5px;
+    padding: 20px;
+}
+
+@media only screen and (max-width: 1200px) {    
+    #configPanel {
+        margin-bottom: 20px;
+    }
+
+}
+
+@media only screen and (max-width: 992px) {
+    canvas {
+        margin-bottom: 20px;
+    }
+}
+
+#startButton {
+    background-color: rgba(11, 1, 7, 1);
+    display: block;
+    margin: auto;
+
+}
