@@ -9,7 +9,7 @@ class Reversi {
         this.humanPlayers = []
         // this.blackPlayer = document.getElementById("engineSelect").value
         this.blackPlayer = alphabeta
-        this.redPlayer = "human"
+        this.redPlayer = alphabeta
         this.aiDelay = 1000 //miliseconds
         this.freeTiles = dims**2 - 4
         this.gameHistory = ""
@@ -17,8 +17,8 @@ class Reversi {
         this.useBook = false
         // this.blackDepth = document.getElementById("depthSelect1").value
         // this.redDepth = document.getElementById("depthSelect2").value
-        this.blackDepth = 4
-        this.redDepth = 2
+        this.blackDepth = 10
+        this.redDepth = 10
         this.thinking = false
         Object.defineProperty(this, 'openings', {
             configurable: true,
@@ -309,10 +309,12 @@ class Reversi {
                 console.log("activeplayer: ", activePlayer)
                 if (activePlayer === "human") {
                     document.getElementById("myCanvas").addEventListener("mousedown", this.processMove)
+                    console.log("listening for input")
                 }
                 else if (!this.thinking) { //if computer player
                     this.thinking = true
                     setTimeout(function() {reversi.processCompMove(activePlayer)}, this.aiDelay)
+                    console.log("processing CompMove")
                 }
             }
         }
@@ -363,7 +365,7 @@ class Reversi {
                     this.executeMove(move)
                 }
             }
-            if ((this.inBook && this.useBook) == false) {
+            else {
                 let depth = (this.blackTurn ? this.blackDepth : this.redDepth)
                 if (this.freeTiles < 10) {
                     depth = 10
@@ -372,6 +374,7 @@ class Reversi {
                 var w
                 if (typeof(Worker) !== "undefined") {
                     if (typeof(w) == "undefined") {
+                        console.log("creating minimax worker")
                         w = new Worker("js/minimaxWorker.js")
                     }
                     // w.postMessage(reversi)
@@ -490,7 +493,7 @@ document.getElementById("startButton").addEventListener("click", function() {
     // reversi = new Reversi(8)
     // reversi.draw()
     reversi.display.showLegals(reversi)
-    console.log("dig bick energy")
+    console.log("dig bick energy　初めまして")
     console.log("shown legals")
     reversi.handleTurn()
     // reversi.mainLoop()
