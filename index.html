@@ -12,6 +12,62 @@
     <title>Reversi</title>
   </head>
   <body>
+
+    <div class="game-setup-popup">
+        <h1>Game Setup</h1>
+        <div class="container">
+            <div class="row">
+                <div class="col-6" id="blackplayer">
+                <h3>Black Player</h3>
+                <div class="form-group">
+                    <label for="sel1">Player</label>
+                    <select class="form-control" id="blackplayerselect">
+                        <option>Human</option>
+                        <option>Alphabeta</option>
+                        <option>Minimax</option>                        
+                    </select>
+                    <label for="sel1">Search Depth</label>
+                    <select class="form-control" id="blackdepth">
+                        <option>1 Move</option>
+                        <option>2 Moves</option>
+                        <option>3 Moves</option>
+                        <option>4 Moves</option>
+                        <option>5 Moves</option>
+                        <option>6 Moves</option>
+                        <option>7 Moves</option>
+                    </select>
+                </div>
+                </div>
+                <div class="col-6" id ="redplayer">
+                <h3>Red Player</h3>
+                <div class="form-group">
+                    <label for="sel1">Player</label>
+                    <select class="form-control" id="redplayerselect">
+                        <option>Human</option>
+                        <option>Alphabeta</option>
+                        <option>Minimax</option>                        
+                    </select>
+
+                    <label for="sel1">Search Depth</label>
+                    <select class="form-control" id="reddepth">
+                        <option>1 Move</option>
+                        <option>2 Moves</option>
+                        <option>3 Moves</option>
+                        <option>4 Moves</option>
+                        <option>5 Moves</option>
+                        <option>6 Moves</option>
+                        <option>7 Moves</option>
+                    </select>
+                </div>
+
+                </div>
+            </div>
+            <div class="row">
+            <button type="button" class="btn">Start Game</button>
+            <button type="button" class="btn">Cancel</button>
+            </div>
+        </div>
+    </div>
   
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="#">Othello</a>

@@ -7,7 +7,6 @@ class ValuedMove {
 }
 
 function endcheck(field) {
-    // console.log(field)
     let blackLegals = findLegalMoves(field, 1);
     let redLegals = findLegalMoves(field, 2);
     if (blackLegals == false && redLegals == false) {
@@ -19,7 +18,7 @@ function endcheck(field) {
 
 function evaluateByWeight(field, maxToken) {
     let weightings = []
-    let n = 4 - 1
+    let n = 8 - 1
     for (let i = 0; i < n+1; i++) {
         let row = []
         for (let j = 0; j < n+1; j++) {
@@ -41,6 +40,7 @@ function evaluateByWeight(field, maxToken) {
         }
         weightings.push(row)
     }
+
     let result = 0;
     for (let i = 0; i < weightings.length; i++) {
         for (let j = 0; j < weightings[i].length; j++) {
@@ -118,6 +118,7 @@ function mockPlay(field, move, token) {
 }
 
 function evaluate(field, maxToken, tilesLeft) {
+    console.log("tiles left", tilesLeft)
     if (endcheck(field)) {
         console.log("yh ended")
         score = evaluateByTerritory(field, maxToken)
@@ -285,7 +286,14 @@ function findNeighbours(field, player) {
             }
         }
     }
-    const surrounds = [[0,1], [0,-1], [-1,0], [1,0]]
+    var surrounds = []
+    for (i = -1; i < 2; i++) {
+        for (j = -1; j < 2; j++) {
+            if (i != 0 || j != 0) {
+                surrounds.push([i,j])
+            }
+        }
+    }    
     for (let cell of occupiedCells) {
         for (let s of surrounds) {
             let neighbour = cell.map(function(a, b) {return a+s[b]})
@@ -342,15 +350,15 @@ function deleteDuplicates(legals) {
 }
 
 function findLegalMoves(field, player) {
-    const neighbours = findNeighbours(field, player)
-    const legals = validateNeighbours(neighbours, field, player)
+    var neighbours = findNeighbours(field, player)
+    var legals = validateNeighbours(neighbours, field, player)
     return deleteDuplicates(legals)
 }
 
 function onBoard(cell) {
     let valid = true
     for (let coord of cell) {
-        valid = valid && 0 <= coord && coord < 4
+        valid = valid && 0 <= coord && coord < 8
     }
     return valid
 }
@@ -387,3 +395,86 @@ function minimax2(field, depth, maxToken, tilesLeft, maximisingPlayer=true) {
     }
 }
 
+function findLegalMoves2(board, player=null) {
+    let legals = []
+    let friendlyCells = []
+    // console.log(friendlyCells)
+    let enemyCells = []
+    // console.log("enemy: ", enemyCells)
+    for (i=0; i < board.rows; i++) {
+        for (j=0; j < board.cols; j++) {
+            // console.log([i,j])
+            if (board.field[i][j] == player) {
+                friendlyCells.push([i,j])
+                // console.log(friendlyCells)
+                // friendlyCells.map(console.log)
+            } else if (board.field[i][j] ==  3-player) {
+                enemyCells.push([i,j])
+                // console.log("enemy: ", enemyCells)
+            }
+        }
+    }
+    var surrounds = []
+    for (i = -1; i < 2; i++) {
+        for (j = -1; j < 2; j++) {
+            if (i != 0 || j != 0) {
+                surrounds.push([i,j])
+            }
+        }
+    }
+    var totalOccupied = friendlyCells.concat(enemyCells)
+    for (var cell of totalOccupied) {
+        for (var s of surrounds) {
+            var neighbour = []
+            for (var i = 0; i <= 1; i++) {
+                neighbour.push(cell[i] + s[i])
+            }
+            var legal = true
+            if (JSON.stringify(totalOccupied).includes(neighbour)) legal = false
+            for (var ordinate of neighbour) {
+                if (!(0 <= ordinate && ordinate < board.cols)) legal = false
+                }
+            if (legal) legals.push(neighbour)
+            }
+        }
+    // console.log("maybe legals", legals)
+    var trueLegals = [], directions = []
+    for (var i = -1; i < 2; i++) {
+        for (var j=-1; j<2; j++) {
+            directions.push([i, j])
+        }
+    }
+    directions.splice(4, 1) //removes [0, 0]
+    for (var move of legals) {
+        // console.log(legals)
+        // console.log("move", move)
+        var valid = false
+        for (var d of directions) {
+            // console.log(d)
+            var testedCell = [move[1], move[0]]
+            // console.log("restart", testedCell)
+            var runLength = 0
+            while (true) {
+                // console.log("tested cell", testedCell)
+                var testedCell = testedCell.map(function(a, b) {return a+d[b]})
+                // console.log("next tested cell", testedCell)
+                if (this.onBoard(testedCell)) {
+                    if (board.field[testedCell[1]][testedCell[0]] == 3-player) {
+                        runLength++
+                        // console.log("run", runLength)
+                    } else if (board.field[testedCell[1]][testedCell[0]] == player) {
+                        if (runLength > 0) {
+                            valid = true
+                            // console.log("gotem")
+                        }
+                        break
+                    } else break
+                } else break
+        
+            }
+        }
+        if (valid) trueLegals.push(move)
+    }
+    // console.log(trueLegals)
+    return trueLegals
+}

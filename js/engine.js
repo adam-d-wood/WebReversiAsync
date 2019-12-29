@@ -10,15 +10,15 @@ class Reversi {
         // this.blackPlayer = document.getElementById("engineSelect").value
         this.blackPlayer = alphabeta
         this.redPlayer = alphabeta
-        this.aiDelay = 1000 //miliseconds
+        this.aiDelay = 0 //miliseconds
         this.freeTiles = dims**2 - 4
         this.gameHistory = ""
         this.inBook = true
-        this.useBook = false
+        this.useBook = true
         // this.blackDepth = document.getElementById("depthSelect1").value
         // this.redDepth = document.getElementById("depthSelect2").value
-        this.blackDepth = 10
-        this.redDepth = 10
+        this.blackDepth = 2
+        this.redDepth = 4
         this.thinking = false
         Object.defineProperty(this, 'openings', {
             configurable: true,
@@ -313,8 +313,8 @@ class Reversi {
                 }
                 else if (!this.thinking) { //if computer player
                     this.thinking = true
-                    setTimeout(function() {reversi.processCompMove(activePlayer)}, this.aiDelay)
                     console.log("processing CompMove")
+                    setTimeout(function() {reversi.processCompMove(activePlayer)}, this.aiDelay)
                 }
             }
         }
@@ -322,12 +322,15 @@ class Reversi {
     }
 
     processCompMove(player) {
+        var executed = false
         var activePlayer = (this.blackTurn ? this.blackPlayer : this.redPlayer) 
         if (activePlayer !== "human") {
             console.log("d")
             if (this.gameHistory == "") {
                 let legals = this.findLegalMoves(this.board)
                 var move = legals[Math.floor(Math.random() * legals.length)].reverse()
+                executed = true
+                console.log("executed = true (immediate)")
                 this.executeMove(move)
                 // var move = [2, 3]
             } else if (this.inBook && this.useBook) {
@@ -362,10 +365,14 @@ class Reversi {
                     var move = this.board.rotateCell(rotMove, 4-opening[1])
                     // console.log(move)   
                     move = [move[0], move[1]]
+                    executed = true
+                    console.log("executed = true")
                     this.executeMove(move)
                 }
             }
-            else {
+            console.log("executed", executed)
+            if (((this.inBook && this.useBook) == false) && (executed == false)) {
+                console.log("minimaxing")
                 let depth = (this.blackTurn ? this.blackDepth : this.redDepth)
                 if (this.freeTiles < 10) {
                     depth = 10
@@ -419,6 +426,7 @@ class Reversi {
             this.gameHistory += Reversi.humanForm(move).join("")
             console.log(this.gameHistory)
             this.updateGameTable()
+            this.freeTiles -= 1
             this.thinking = false
             this.handleTurn()
         }
@@ -485,7 +493,7 @@ class Reversi {
     }
 }
 
-reversi = new Reversi(4)
+reversi = new Reversi(8)
 reversi.draw()
 
 

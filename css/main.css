@@ -146,3 +146,43 @@ th {
     margin: auto;
 
 }
+
+.game-setup-popup {
+    background-color: rgba(11, 95, 8, 1);
+    border-radius: 5px;
+    padding: 20px;
+    margin: auto;
+    width: 70%;
+    text-align: center;
+    color: white;
+}
+
+.game-setup-popup h1 {
+    padding: 2px;
+}
+
+.game-setup-popup .form-control {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+}
+
+#blackplayer {
+    /* background-color: darkslategray; */
+    width: 40%;
+    height: 100%;
+    border-right: black 2px solid;
+}
+
+#redplayer {
+    /* background-color: deeppink; */
+    width: 40%;
+    height: 100%;
+    /* border-left: black 2px solid; */
+}
+
+.tile {
+    height: 100%;
+    width: same-as-height;
+    border-radius: 50%;
+    border: 2px black solid;
+}
