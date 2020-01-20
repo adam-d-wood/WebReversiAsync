@@ -11,33 +11,32 @@ class Display {
         // this.canvas.height = this.canvas.offsetHeight;
         this.cols = dims
         this.rows = dims
-        this.colWidth = this.canvas.width/this.cols
-        this.rowHeight = this.canvas.height/this.rows
-        // this.blackColour = "#80D39B"
-        // this.redColour = "#B3B7EE"
-        // this.blackColour = "#FFE066"
-        // this.redColour = "#F25F5C"
-        this.blackColour = "#00B3AA"
-        this.redColour = "#B33D00"
+        this.colWidth = this.canvas.width / this.cols
+        this.rowHeight = this.canvas.height / this.rows
+            // this.blackColour = "#80D39B"
+            // this.redColour = "#B3B7EE"
+            // this.blackColour = "#FFE066"
+            // this.redColour = "#F25F5C"
+        this.blackColour = "#000000"
+        this.redColour = "#ffffff"
 
         $("#myCanvas").mousemove(function(event) {
             const bound = this.getBoundingClientRect()
             var x = event.clientX - bound.left
             var y = event.clientY - bound.top
-            var cellX = Math.floor(x/reversi.display.colWidth),
-            cellY = Math.floor(y/reversi.display.rowHeight)
+            var cellX = Math.floor(x / reversi.display.colWidth),
+                cellY = Math.floor(y / reversi.display.rowHeight)
             $("#machineCoords").text(cellX + ", " + cellY)
             $("#humanCoords").text(Reversi.humanForm([cellX, cellY]))
 
         })
 
-        for (let i=1; i < 3; i++) {
-            let depthSelect = document.getElementById("depthSelect" + i)
-            let depthLabel = document.getElementById("depthLabel" + i)
+        for (let colour of["black", "red"]) {
+            let depthSelect = document.getElementById(colour + "depth")
+            console.log("bill gates", depthSelect)
             depthSelect.oninput = function() {
-                depthLabel.innerHTML = this.value
-                console.log(reversi.depth, this.value)
-                if (i==1) {
+                console.log(colour + " depth:", this.value)
+                if (colour == "black") {
                     reversi.blackDepth = this.value
                 } else {
                     reversi.redDepth = this.value
@@ -49,49 +48,49 @@ class Display {
     drawBoard(board) {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
         this.ctx.strokeStyle = "#A2A3BB"
-        for (var i=1; i<this.rows; ++i) {
+        for (var i = 1; i < this.rows; ++i) {
             this.ctx.beginPath()
-            this.ctx.moveTo(this.colWidth*i, 0)
-            this.ctx.lineTo(this.colWidth*i, this.canvas.height)
+            this.ctx.moveTo(this.colWidth * i, 0)
+            this.ctx.lineTo(this.colWidth * i, this.canvas.height)
             this.ctx.stroke()
             this.ctx.closePath()
-            
+
             this.ctx.beginPath()
-            this.ctx.moveTo(0, this.rowHeight*i)
-            this.ctx.lineTo(this.canvas.width, this.rowHeight*i)
+            this.ctx.moveTo(0, this.rowHeight * i)
+            this.ctx.lineTo(this.canvas.width, this.rowHeight * i)
             this.ctx.stroke()
             this.ctx.closePath()
         }
 
-        for (let i = 0; i < this.rows+1; i++) {
+        for (let i = 0; i < this.rows + 1; i++) {
             this.ctx.font = "14px Lucida Console"
-            this.ctx.fillStyle = "#A2A3BB"
-            this.ctx.fillText(String.fromCharCode(i+96), this.colWidth*i-14, 15)
-            this.ctx.fillText(i, 1, this.rowHeight*i-10)
+            this.ctx.fillStyle = "#D9C9C9"
+            this.ctx.fillText(String.fromCharCode(i + 96), this.colWidth * i - 14, 15)
+            this.ctx.fillText(i, 1, this.rowHeight * i - 10)
 
         }
-        
+
         // console.log("field", board.field)
         for (var i = 0; i < board.field.length; i++) {
             for (var j = 0; j < board.field[i].length; j++) {
                 if (board.field[i][j] == 1) {
                     // console.log("drawing p1 at", i,j)
                     this.ctx.fillStyle = this.blackColour
-                    var x = (this.colWidth)*j+this.canvas.width/(this.cols*2),
-                    y = (this.rowHeight)*i+this.canvas.height/(this.rows*2)
+                    var x = (this.colWidth) * j + this.canvas.width / (this.cols * 2),
+                        y = (this.rowHeight) * i + this.canvas.height / (this.rows * 2)
                     this.ctx.beginPath()
-                    this.ctx.arc(x, y, this.colWidth/3, 0, 2 * Math.PI)
+                    this.ctx.arc(x, y, this.colWidth / 3, 0, 2 * Math.PI)
                     this.ctx.fill()
                 } else if (board.field[i][j] == 2) {
                     // console.log("drawing p2 at", i,j)
                     this.ctx.fillStyle = this.redColour
-                    x = (this.colWidth)*j+this.canvas.width/(this.cols*2)
-                    y = (this.rowHeight)*i+this.canvas.height/(this.rows*2)
+                    x = (this.colWidth) * j + this.canvas.width / (this.cols * 2)
+                    y = (this.rowHeight) * i + this.canvas.height / (this.rows * 2)
                     this.ctx.beginPath()
-                    this.ctx.arc(x, y, this.colWidth/3, 0, 2 * Math.PI)
+                    this.ctx.arc(x, y, this.colWidth / 3, 0, 2 * Math.PI)
                     this.ctx.fill()
                     this.ctx.closePath()
-        
+
                 }
             }
         }
@@ -100,11 +99,12 @@ class Display {
 
     showLegals(game) {
         let legals = game.findLegalMoves(game.board)
-        // console.log("field", game.board.field)
-        // console.log("legals", legals)
+            // console.log("field", game.board.field)
+            // console.log("legals", legals)
         for (var i = 0; i < game.board.rows; i++) {
             for (var j = 0; j < game.board.cols; j++) {
-                var x = this.colWidth * (j+0.5), y = this.rowHeight * (i+0.5)
+                var x = this.colWidth * (j + 0.5),
+                    y = this.rowHeight * (i + 0.5)
                 switch (game.turnToken()) {
                     case 1:
                         this.ctx.fillStyle = this.blackColour
@@ -113,7 +113,7 @@ class Display {
                         this.ctx.fillStyle = this.redColour
                         break
                 }
-                if (JSON.stringify(legals).includes([i,j])) {
+                if (JSON.stringify(legals).includes([i, j])) {
                     this.ctx.beginPath()
                     this.ctx.arc(x, y, 5, 0, 2 * Math.PI)
                     this.ctx.fill()

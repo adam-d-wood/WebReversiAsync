@@ -13,8 +13,7 @@
   </head>
   <body>
 
-    <div class="game-setup-popup">
-        <h1>Game Setup</h1>
+    <div class="game-setup-popup" id="setupPopup">
         <div class="container">
             <div class="row">
                 <div class="col-6" id="blackplayer">
@@ -62,9 +61,11 @@
 
                 </div>
             </div>
-            <div class="row">
-            <button type="button" class="btn">Start Game</button>
-            <button type="button" class="btn">Cancel</button>
+            <div class="row" id="buttonRow">
+            <div class="col-12">
+            <button type="button" class="btn" id="startButton">Start Game</button>
+            <button type="button" class="btn" id="cancelButton">Cancel</button>
+            </div>
             </div>
         </div>
     </div>
@@ -133,6 +134,7 @@
                 <canvas id="myCanvas" width="500" height="500">
                 Your browser does not support the canvas element.
                 </canvas>
+                <button class="btn" id="configButton">Setup Game</button>
             </div>
             <div class="col-12 col-lg-6 col-xl-3">
                 <div id="tableWrapper">
@@ -145,12 +147,6 @@
                 </div>
             </div>
         </div>
-
-    <select id="engineSelect">
-        <option value="negascout">Negascout</option>
-    </select>
-    <p id="ops"></p>
-
     <script src="js/minimax.js"></script>
     <script src="js/randomMove.js"></script>
     <script src="js/negascout.js"></script>

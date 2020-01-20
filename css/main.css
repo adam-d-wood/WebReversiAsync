@@ -9,6 +9,7 @@ p {
 body {
     background-color: rgb(41, 41, 41);
     /* background: white; */
+    background-color: #cccccc;
 }
 
 #humanCoords {
@@ -16,8 +17,9 @@ body {
 }
 
 .slidecontainer {
-    width: 100%; /* Width of the outside container */
-  }  
+    width: 100%;
+    /* Width of the outside container */
+}
 
 .slider {
     -webkit-appearance: none;
@@ -28,7 +30,7 @@ body {
     outline: none;
     opacity: 0.7;
     -webkit-transition: 0.2s;
-    transition: opacity .2s; 
+    transition: opacity .2s;
 }
 
 .col-md-3 {
@@ -40,20 +42,29 @@ body {
 }
 
 .slider::-webkit-slider-thumb {
-    -webkit-appearance: none; /* Override default look */
+    -webkit-appearance: none;
+    /* Override default look */
     appearance: none;
-    width: 25px; /* Set a specific slider handle width */
-    height: 25px; /* Slider handle height */
-    background: #4CAF50; /* Green background */
-    cursor: pointer; /* Cursor on hover */
-  }
-  
-  .slider::-moz-range-thumb {
-    width: 25px; /* Set a specific slider handle width */
-    height: 25px; /* Slider handle height */
-    background: #4CAF50; /* Green background */
-    cursor: pointer; /* Cursor on hover */
-  }  
+    width: 25px;
+    /* Set a specific slider handle width */
+    height: 25px;
+    /* Slider handle height */
+    background: #4CAF50;
+    /* Green background */
+    cursor: pointer;
+    /* Cursor on hover */
+}
+
+.slider::-moz-range-thumb {
+    width: 25px;
+    /* Set a specific slider handle width */
+    height: 25px;
+    /* Slider handle height */
+    background: #4CAF50;
+    /* Green background */
+    cursor: pointer;
+    /* Cursor on hover */
+}
 
 canvas {
     background: rgba(11, 95, 8, 1);
@@ -63,6 +74,7 @@ canvas {
     padding: 0;
     display: block;
     border-radius: 5px;
+    margin: solid black 100px;
 }
 
 #moveHistory {
@@ -71,6 +83,7 @@ canvas {
     font-size: 1rem;
     font-family: "Lucida Console";
 }
+
 
 /* #moveHistory tr:nth-child(even) {
     background-color: #50514F;
@@ -86,15 +99,16 @@ canvas {
     height: 50px;
 }
 
-#moveHistory td:nth-child(even), th:nth-child(even)  {
-    color: #B33D00;
+#moveHistory td:nth-child(even),
+th:nth-child(even) {
+    color: #fff;
     text-align: center;
 }
 
-#moveHistory td:nth-child(odd), th:nth-child(odd) {
-    color: #00B3AA;
+#moveHistory td:nth-child(odd),
+th:nth-child(odd) {
+    color: #000;
     text-align: center;
-
 }
 
 #tableWrapper {
@@ -118,7 +132,7 @@ th {
 }
 
 .navbar {
-    display: none;
+    /* display: none; */
 }
 
 #configPanel {
@@ -127,11 +141,10 @@ th {
     padding: 20px;
 }
 
-@media only screen and (max-width: 1200px) {    
+@media only screen and (max-width: 1200px) {
     #configPanel {
         margin-bottom: 20px;
     }
-
 }
 
 @media only screen and (max-width: 992px) {
@@ -142,9 +155,16 @@ th {
 
 #startButton {
     background-color: rgba(11, 1, 7, 1);
-    display: block;
-    margin: auto;
+    display: inline;
+    margin-right: 5px;
+    color: white;
+}
 
+#cancelButton {
+    background-color: rgb(99, 18, 18);
+    color: white;
+    margin-left: 5px;
+    display: inline;
 }
 
 .game-setup-popup {
@@ -155,6 +175,7 @@ th {
     width: 70%;
     text-align: center;
     color: white;
+    display: none;
 }
 
 .game-setup-popup h1 {
@@ -185,4 +206,20 @@ th {
     width: same-as-height;
     border-radius: 50%;
     border: 2px black solid;
+}
+
+#buttonRow {
+    padding: 30px;
+}
+
+#configButton {
+    background-color: rgba(11, 95, 8, 1);
+    margin: auto;
+    display: block;
+    margin-top: 10px;
+    color: white;
+}
+
+#configPanel {
+    visibility: hidden;
 }
